@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-
+----------------------------------------------------------------------------------
 6) TEXT TO SPEECH
 
 	IN XML, TAKE EDITTEXT AND A BUTTON 
@@ -224,7 +224,49 @@ public class MainActivity extends AppCompatActivity {
 
 ==============================================================
 
+7) TO SEND SMS 
+AND ONE PERMISSION IN ADNROIDMANIFEST.XML 
+ <uses-permission android:name="android.permission.SEND_SMS"/>
+ 
+ USE SUGGESTION, DONT COPY PASTE THIS 
+ 
+ IN XML TAKE TWO BUTTON, ONE FOR PHONE NUMBER AND OTHER FOR SMS MESSAGE
+ 
+ 
+ IN MAIN ACTIVITY
+ 
+public class MainActivity extends AppCompatActivity {
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button btn = findViewById(R.id.button);
+        EditText etphone  = findViewById(R.id.et_phoneNo);
+        EditText etmsg = findViewById(R.id.et_msg);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String number = etphone.getText().toString();
+                String msg = etmsg.getText().toString();
+                try{
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(number,null,msg,null,null);
+                    Toast.makeText(MainActivity.this, "Message Sent", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(MainActivity.this, "Some feilds empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+
+}
+
+ 
 
 
 
