@@ -134,16 +134,95 @@ public void openMaps(View view) {
 }
 
 
-
+to add resource for audio and video files 
+	-right click on res folder 
+	-new>>android resource directory>>raw>>raw >>ok
+	-in that raw folder, paste your audio and video files
 ---------------------------------------------
+5) Audio player 
+in xml 
+just take a video view
+ <VideoView
+        android:layout_width="match_parent"
+        android:id="@+id/video_viewer"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+	
+in activity main 
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+        VideoView videoView = findViewById(R.id.video_viewer);
+        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.braniac_01;
+
+        Uri uri = Uri.parse(videoPath);
+        videoView.setVideoURI(uri);
+
+        MediaController mediaController = new MediaController(this);
+        videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(videoView);
+
+    }
+}
+
+
+6) TEXT TO SPEECH
+
+	IN XML, TAKE EDITTEXT AND A BUTTON 
+
+	IN ACTIVITY MAIN 
+	
+	
+	public class MainActivity extends AppCompatActivity {
+
+
+    TextToSpeech tts;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+    Button btn = findViewById(R.id.button);
+    EditText e1 = findViewById(R.id.editTextTextMultiLine);
+
+    btn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int i) {
+                    if(i == TextToSpeech.SUCCESS){
+                        tts.setLanguage(Locale.US);
+                        tts.setSpeechRate(1.0f);
+                        tts.speak(e1.getText().toString(),TextToSpeech.QUEUE_ADD,null );
+                    }
+                }
+            });
+        }
+    });
 
 
 
 
 
 
+}}
 
 
+==============================================================
 
 
 
