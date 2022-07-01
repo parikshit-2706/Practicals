@@ -1,0 +1,159 @@
+1) Open camera and click image 
+
+im xml 
+
+<Button
+        android:id="@+id/camera_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="232dp"
+        android:text="Click me"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/click_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="140dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+        
+ in activity main 
+ 
+   private static final int pic_id = 123;
+    ImageView img;
+    Button btn;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+         img = findViewById(R.id.click_image);
+         btn = findViewById(R.id.camera_button);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cam_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                startActivityForResult(cam_intent, pic_id);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == pic_id){
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+
+            img.setImageBitmap(photo);
+        }
+
+    }
+
+
+2) OPEn google 
+
+	public void openGoogle(View view) {
+	Intent i = new Intent(Intent.ACTION_VIEW);
+	i.setData(Uri.parse("https://www.google.com"));
+	startActivity(i);
+	}
+
+
+
+3) OPEN MAPS
+public void openMaps(View view) {
+	Intent i = new Intent(Intent.ACTION_VIEW);
+	i.setData(Uri.parse("geo:19.8798042,75.3478223"));
+	startActivity(i);
+	}
+  
+  
+4) PLAY AUDIO
+
+  in xml change the top line to linear layout
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    
+    then three buttons 
+    start pause play
+    
+    in activity main --->
+    
+    public class MainActivity extends AppCompatActivity {
+
+
+
+    MediaPlayer player;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+
+    public void onstart(View view) {
+        if(player == null)
+        {
+          player =  MediaPlayer.create(this, R.raw.rachel);
+
+        }
+        player.start();
+    }
+
+    public void onpause(View view) {
+        if(player != null)
+        {
+            player.pause();
+        }
+    }
+
+    public void onstop(View view) {
+        stopPLayer();
+    }
+
+    private  void stopPLayer() {
+        if(player != null)
+        {
+            player.release();
+            player = null;
+            Toast.makeText(this, "Music Stopped", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+}
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
